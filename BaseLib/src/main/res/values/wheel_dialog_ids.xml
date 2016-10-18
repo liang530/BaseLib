@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="wheel_dialog_left" type="id"/>
+    <item name="wheel_dialog_right" type="id"/>
+    <item name="wheel_dialog_wheel1" type="id"/>
+    <item name="wheel_dialog_wheel2" type="id"/>
+    <item name="wheel_dialog_wheel3" type="id"/>
+    <item name="wheel_dialog_wheel4" type="id"/>
+    <item name="wheel_dialog_wheel5" type="id"/>
+</resources>

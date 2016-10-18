@@ -1,0 +1,68 @@
+一、生成keystore
+
+1.项目app目录下建立key目录，生成一个keystore，放入key目录，同时从Baselib拷贝keystore.bat到建立key目录
+2.修改keystore.bat 里面对应的密码和别名以及对应的keystroe文件位置，运行keystore.bat即可生成key信息。
+3.在生成的key信息中补上你设置的密码，防止忘记。
+
+二、build.gradle配置
+
+1.项目输出apk的名字
+2.绑定指定的keystroe
+3.由于23的权限问题，暂时配置targetSdkVersion 22
+4.混淆的配置，一个基础混淆配置文件（base_proguard-rules.pro），一个跟项目相关的配置（proguard-rules.pro）
+  在第三方库没增加，代码结构没变的情况下，直接复制拷贝这两个文件到app根目录，替换里面出现的项目包名即可。
+  如果增加了第三方库，请自行在proguard-rules.pro添加对应的混淆。
+
+
+5.配置依赖,在项目根目录下build.gradle里面添加:
+
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.0.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+    repositories {
+        flatDir {
+            dirs '../BaseLib/libs'
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    // Sdk and tools
+    minSdkVersion = 15e
+    targetSdkVersion = 22
+    compileSdkVersion = 23
+    buildToolsVersion = '23.0.3'
+    // App dependencies
+    supportLibraryVersion = '23.4.0'
+    butterknife = '8.0.1'
+    nineoldandroids = '2.4.0'
+    okhttp = '2.7.0'
+    umengAnalytics = 'latest.integration'
+    flycoTabLayout_Lib = '2.0.2@aar'
+    photoView = '1.2.4'
+    eventbus = '3.0.0'
+    glide = '3.7.0'
+}
+

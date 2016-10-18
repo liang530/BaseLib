@@ -1,0 +1,58 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.1'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+    repositories {
+        flatDir {
+            dirs '../BaseLib/libs'
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    // Sdk and tools
+    minSdkVersion = 15
+    targetSdkVersion = 20
+    compileSdkVersion = 24
+    buildToolsVersion = '24.0.2'
+    // App dependencies
+    supportLibraryVersion = '24.2.1'
+    butterknife = '8.4.0'
+    nineoldandroids = '2.4.0'
+    okhttp = '3.4.1'
+    gson = '2.7'
+    ucrop='1.5.0'
+    umengAnalytics = 'latest.integration'
+    flycoTabLayout_Lib = '2.0.2@aar'
+    photoView = '1.2.4'
+    eventbus = '3.0.0'
+    glide = '3.7.0'
+    ultraPtr = '1.0.11'
+    fastjson = '1.1.46.android'
+    leakcanary = '1.4-beta2'
+    recyclerviewAnimators = '2.2.3'
+    filedownloader = 'master'
+    convenientbanner = '2.0.5'
+}

@@ -1,0 +1,25 @@
+本类库包含内容如下：
+1.各种开发常用util工具类
+2.包含一些自定义控件(如：刷新控件，轮播图，不滑动的列表控件……具体看views包)
+3.包含联网类：rxvolley包下
+4.包含选择图片时的图库photopicker包下（图片上传需考虑压缩，可使用ABImageUtil.java类中的压缩方法压缩）
+……
+
+如果不熟悉以下工具或者第三方,请尽快熟悉
+1.android studio2.0
+2.联网类 rxvolley包下
+3.recyclerview （请尽量使用这个替代ListView 和GridView）
+4.EventBus 3.0 事件总线
+5.views->grid包下是基于V7包中的gridlayout的，使用请参考V7包中的gridlayout，特别注意，布局文件使用时，特定属性命名空间用app,不要用android
+6.glide 图片加载
+7.git 版本管理使用
+8.butterknife 注解及其插件使用
+9.fastjson   json解析
+
+
+
+
+
+
+
+
