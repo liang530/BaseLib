@@ -2,9 +2,13 @@
 
 2.复制自动生成的资源和代码到项目中
 
+
 3.配置清单文件:见清单文件配置,特别注意配置QQ号
 
-4.配置ShareSDK.xml 中申请好的信息
+4.配置ShareSDK.xml 中申请好的信息：
+        4.1 如果在sharesdk官网后台配置了参数，则会优先使用后台的
+        4.2 如果后台没有配置，可以通过ShareSdk.setPlatformDevInfo()来设置不同平台的配置
+        4.3 如果后台没有，也没有动态配置，则使用sharesdk.xml中的配置
 
 6.可根据需要配置ShareUtil的分享参数
 
