@@ -3,10 +3,15 @@ package com.liang530.rxvolley;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Looper;
 
 import com.google.gson.Gson;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.liang530.application.BaseApplication;
+import com.liang530.log.L;
+import com.liang530.log.T;
+import com.liang530.manager.AppManager;
 
 import org.json.JSONObject;
 
@@ -16,11 +21,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Map;
-
-import com.liang530.application.BaseApplication;
-import com.liang530.log.L;
-import com.liang530.log.T;
-import com.liang530.manager.AppManager;
 
 /**
  * Created by 刘红亮 on 2016/3/6.
@@ -92,7 +92,7 @@ public class HttpJsonCallBackDialog<E> extends HttpCallback {
 
     }
     public void onJsonSuccess(int code,String msg,String data){
-        if(showErrorToast){
+        if(showErrorToast&&isInMainThread()){
             if(AppManager.getActivityStack().size()!=0){
                 T.s(AppManager.getActivityStack().get(0),msg);
             }
@@ -108,7 +108,8 @@ public class HttpJsonCallBackDialog<E> extends HttpCallback {
     public void onFailure(int errorNo, String strMsg, String completionInfo) {
         super.onFailure(errorNo, strMsg, completionInfo);
         L.e("netnet-error", completionInfo);
-        if(showErrorToast){
+
+        if(showErrorToast&&isInMainThread()){
             if(AppManager.getActivityStack().size()!=0){
                 T.s(AppManager.getActivityStack().get(0),VolleyErrorMsg.getMessage(errorNo, strMsg));
             }
@@ -131,20 +132,6 @@ public class HttpJsonCallBackDialog<E> extends HttpCallback {
     protected Class<E> getTClass() {
         ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
         Type resultType = type.getActualTypeArguments()[0];
-        // ImplForType, ParameterizedTypeImpl
-//        if ("ParameterizedTypeImpl".equals(resultType.getClass().getSimpleName()) || "ImplForType".equals(resultType.getClass().getSimpleName())) {
-//            try {
-//                Field field = resultType.getClass().getDeclaredField("rawTypeName");
-//                field.setAccessible(true);
-//                String rawTypeName = (String) field.getWithCache(resultType);
-//                return (Class<T>) Class.forName(rawTypeName);
-//            } catch (Exception e) {
-//                return (Class<T>) Collection.class;
-//            }
-//        } else {
-//            return (Class<T>) resultType;
-//        }
-
         if (resultType instanceof Class) {
             return (Class<E>) resultType;
         } else {
@@ -158,5 +145,8 @@ public class HttpJsonCallBackDialog<E> extends HttpCallback {
                 return (Class<E>) Collection.class;
             }
         }
+    }
+    public static boolean isInMainThread() {
+        return Looper.myLooper() == Looper.getMainLooper();
     }
 }
