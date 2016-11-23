@@ -42,6 +42,7 @@ ext {
     butterknife = '8.4.0'
     nineoldandroids = '2.4.0'
     okhttp = '3.4.1'
+    okvolley = '1.0.3'
     gson = '2.7'
     ucrop='1.5.0'
     umengAnalytics = 'latest.integration'
