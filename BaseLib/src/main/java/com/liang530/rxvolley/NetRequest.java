@@ -42,11 +42,14 @@ public class NetRequest {
      */
     @Deprecated
     public static NetRequest request() {
-        return new NetRequest();
+        return new NetRequest(null);
     }
 
     public static NetRequest request(Object mTag) {
-        return new NetRequest();
+        return new NetRequest(mTag);
+    }
+    private NetRequest(Object tag){
+        this.mTag=tag;
     }
     private static boolean againRequestSwitch=true;
     private  boolean againRequest=true;
