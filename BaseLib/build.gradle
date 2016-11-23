@@ -35,7 +35,7 @@ dependencies {
     compile "in.srain.cube:ultra-ptr:$rootProject.ultraPtr"
     provided "com.android.support:support-v4:$rootProject.supportLibraryVersion"
     compile "com.google.code.gson:gson:$rootProject.gson"
-    compile 'com.github.liang530:OkVolley:1.0.2'
+    compile "com.github.liang530:OkVolley:$rootProject.okvolley"
     //    compile "com.nineoldandroids:library:$rootProject.nineoldandroids"
 //    compile ("com.yalantis:ucrop:$rootProject.ucrop"){
 //        exclude module:"okhttp"
