@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.reflect.Field;
-
 import com.liang530.log.L;
 import com.liang530.rxvolley.NetRequest;
+
+import java.lang.reflect.Field;
 
 public class BaseFragment extends Fragment {
 	protected LayoutInflater inflater;
@@ -43,7 +43,7 @@ public class BaseFragment extends Fragment {
 
 	@Override
 	public void onDestroyView() {
-		NetRequest.getRequestQueue().cancelAll(this);//activity销毁时取消请求
+		NetRequest.getRequestQueue().cancelAll(NetRequest.getDefaultTag(this));//activity销毁时取消请求
 		super.onDestroyView();
 		contentView = null;
 		container = null;

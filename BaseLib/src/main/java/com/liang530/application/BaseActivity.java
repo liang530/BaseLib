@@ -57,7 +57,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         AppManager.getAppManager().removeActivity(this);
-        NetRequest.getRequestQueue().cancelAll(this);//activity销毁时取消请求
+        NetRequest.getRequestQueue().cancelAll(NetRequest.getDefaultTag(this));//activity销毁时取消请求
         super.onDestroy();
     }
 
