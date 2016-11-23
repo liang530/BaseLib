@@ -49,9 +49,14 @@ public class NetRequest {
         return new NetRequest(mTag);
     }
     private NetRequest(Object tag){
-        this.mTag=getDefaultTag(tag);
+        if(tag!=null){
+            this.mTag=getDefaultTag(tag);
+        }
     }
     public static Object getDefaultTag(Object object){
+        if(object==null){
+            return null;
+        }
         return object.getClass().getSimpleName()+object.hashCode();
     }
     private static boolean againRequestSwitch=true;
