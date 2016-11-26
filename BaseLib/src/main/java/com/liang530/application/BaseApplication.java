@@ -19,7 +19,7 @@ import okhttp3.OkHttpClient;
 public abstract class BaseApplication extends Application {
     SystemBarTintManager.SystemBarTintConfig config;
     private static BaseApplication instance;
-
+    private long defaultClickDelayTime=1000;
 
     public static BaseApplication getInstance() {
         return instance;
@@ -75,5 +75,14 @@ public abstract class BaseApplication extends Application {
     public void setStatusColorConfig(SystemBarTintManager.SystemBarTintConfig config) {
         this.config=config;
     }
+
+    public long getDefaultClickDelayTime() {
+        return defaultClickDelayTime;
+    }
+
+    public void setDefaultClickDelayTime(long defaultClickDelayTime) {
+        this.defaultClickDelayTime = defaultClickDelayTime;
+    }
+
     public abstract Class getLoginClass();
 }

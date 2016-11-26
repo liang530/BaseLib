@@ -2,11 +2,13 @@ package com.liang530.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.liang530.application.BaseApplication;
 import com.liang530.log.L;
 import com.liang530.rxvolley.NetRequest;
 
@@ -18,6 +20,7 @@ public class BaseFragment extends Fragment {
 	protected Context mContext;
 	private ViewGroup container;
 	protected String TAG = getClass().getName();
+	protected Handler mHandler=new Handler();
 	protected void le(String msg) {
 		L.e(TAG, msg);
 	}
@@ -40,10 +43,32 @@ public class BaseFragment extends Fragment {
 	protected void onCreateView(Bundle savedInstanceState) {
 
 	}
-
+	protected void delayClick(final View view){
+		view.setEnabled(false);
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				if(view!=null){
+					view.setEnabled(true);
+				}
+			}
+		}, BaseApplication.getInstance().getDefaultClickDelayTime());
+	}
+	protected void delayClick(final View view,long time){
+		view.setEnabled(false);
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				if(view!=null){
+					view.setEnabled(true);
+				}
+			}
+		},time);
+	}
 	@Override
 	public void onDestroyView() {
 		NetRequest.getRequestQueue().cancelAll(NetRequest.getDefaultTag(this));//activity销毁时取消请求
+		mHandler.removeCallbacksAndMessages(null);
 		super.onDestroyView();
 		contentView = null;
 		container = null;

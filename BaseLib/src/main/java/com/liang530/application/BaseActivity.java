@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.liang530.log.L;
 import com.liang530.manager.AppManager;
@@ -23,7 +25,7 @@ public class BaseActivity extends AppCompatActivity {
     protected String TAG = getClass().getName();
     protected Context mContext;
     protected Activity mActivity;
-
+    protected Handler mHandler=new Handler();
     protected void le(String msg) {
         L.e(TAG, msg);
     }
@@ -53,11 +55,35 @@ public class BaseActivity extends AppCompatActivity {
             BaseAppUtil.setStatusImmerse(this,BaseApplication.getInstance().getConfig());
         }
     }
+    protected void delayClick(final View view){
+        view.setEnabled(false);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(view!=null){
+                    view.setEnabled(true);
+                }
+            }
+        },BaseApplication.getInstance().getDefaultClickDelayTime());
+    }
+    protected void delayClick(final View view,long time){
+        view.setEnabled(false);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(view!=null){
+                    view.setEnabled(true);
+                }
+            }
+        },time);
+    }
+
 
     @Override
     protected void onDestroy() {
         AppManager.getAppManager().removeActivity(this);
         NetRequest.getRequestQueue().cancelAll(NetRequest.getDefaultTag(this));//activity销毁时取消请求
+        mHandler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }
 
