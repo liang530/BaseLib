@@ -42,14 +42,15 @@ import okhttp3.Response;
 
 
 /**
- * OkHttp3的执行器,可用于替换原框架自带的HttpUrlConnection执行器
+ * OkHttp3 忽略所有https证书的执行器,可用于替换原框架自带的HttpUrlConnection执行器
+ *
  * 修改 by liuhongliang 2016.6.1
  */
-public class OkHttpStack implements IHttpStack {
+public class OkHttpIgnoreHttpsStack implements IHttpStack {
 
     private final OkHttpClient mClient;
 
-    public OkHttpStack(OkHttpClient client) {
+    public OkHttpIgnoreHttpsStack(OkHttpClient client) {
         this.mClient = client;
     }
 
@@ -57,12 +58,12 @@ public class OkHttpStack implements IHttpStack {
     public URLHttpResponse performRequest(Request<?> request, ArrayList<HttpParamsEntry>
             additionalHeaders) throws IOException {
         int timeoutMs = request.getTimeoutMs();
-        OkHttpClient client = mClient.newBuilder()
+
+        OkHttpClient client =OkHttpUtils.setSSL( mClient.newBuilder())
                 .readTimeout(timeoutMs, TimeUnit.MILLISECONDS)
                 .connectTimeout(timeoutMs, TimeUnit.MILLISECONDS)
                 .writeTimeout(timeoutMs, TimeUnit.MILLISECONDS)
                 .build();
-
         okhttp3.Request.Builder okHttpRequestBuilder = new okhttp3.Request.Builder();
         okHttpRequestBuilder.url(request.getUrl());
 
@@ -154,4 +155,6 @@ public class OkHttpStack implements IHttpStack {
 
         return RequestBody.create(MediaType.parse(r.getBodyContentType()), body);
     }
+
+
 }
