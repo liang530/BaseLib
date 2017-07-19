@@ -25,7 +25,7 @@ import com.liang530.utils.BaseAppUtil;
  */
 public class NetRequest {
     private static final int REQ_POST_TIME_OUT_DEBUG = 5*60*1000;
-    private static final int REQ_POST_TIME_OUT   = 15*1000;
+    private static final int REQ_POST_TIME_OUT   = 30*1000;
     public static boolean mIsDebug = false;
     private boolean showErrorToast=true;
     private String flag[];
@@ -35,7 +35,7 @@ public class NetRequest {
     private boolean mShouldCache=false;
     private final String  TAG=NetRequest.class.getSimpleName();
     private static boolean safeRequest=false;
-
+    private int timeout=REQ_POST_TIME_OUT;
     /**
      * 看request(mTag)
      * @return
@@ -140,7 +140,10 @@ public class NetRequest {
         this.flag = flag;
         return this;
     }
-
+    public NetRequest setTimeout(int timeout) {
+        this.timeout = timeout;
+        return this;
+    }
     public boolean ismShouldCache() {
         return mShouldCache;
     }
@@ -303,7 +306,7 @@ public class NetRequest {
 
         if(BaseAppUtil.isOnline(BaseApplication.getInstance())){
             new RxVolley.Builder().url(url).shouldCache(mShouldCache)
-                    .params(params!=null?params:new HttpParams()).setTag(mTag!=null?mTag:url).callback(callback).doTask();
+                    .params(params!=null?params:new HttpParams()).setTag(mTag!=null?mTag:url).timeout(timeout).callback(callback).doTask();
         }else{
             callback.onFailure(502,"手机可能未连接网络","由于无网络，再请求前被拦截");
         }
@@ -313,7 +316,7 @@ public class NetRequest {
         printUrl(url, params);
         if(BaseAppUtil.isOnline(BaseApplication.getInstance())){
             new RxVolley.Builder().url(url).shouldCache(mShouldCache).retryPolicy(new DefaultRetryPolicy(mIsDebug ? REQ_POST_TIME_OUT_DEBUG : REQ_POST_TIME_OUT,
-                    0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)).params(params != null ? params : new HttpParams()).httpMethod(RxVolley.Method.POST).setTag(mTag!=null?mTag:url).callback(callback).doTask();
+                    0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)).params(params != null ? params : new HttpParams()).httpMethod(RxVolley.Method.POST).setTag(mTag!=null?mTag:url).callback(callback).timeout(timeout).doTask();
         }else{
             callback.onFailure(502,"手机可能未连接网络","由于无网络，再请求前被拦截");
         }
